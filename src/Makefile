@@ -1,0 +1,30 @@
+#
+# Starter Makefile
+#
+CXX = clang++
+BUILD_DIR = ./build
+INC = -I .
+LDLIBS = 
+LDFLAGS =
+CXXFLAGS = -std=c++14 -stdlib=libc++ -Wall
+TARGET = app_name
+SOURCES = $(wildcard *.cc)
+OBJ = $(SOURCES:%.cc=$(BUILD_DIR)/%.o)
+DEPS = $(OBJ:%.o=%.d)
+
+$(TARGET) : $(BUILD_DIR)/$(TARGET)
+
+$(BUILD_DIR)/$(TARGET) : $(OBJ) 
+	mkdir -p $(@D)
+	$(CXX) $^ -o $@ $(LDFLAGS) $(LDLIBS)
+
+-include $(DEPS)
+
+$(BUILD_DIR)/%.o : %.cc
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@ $(INC)
+
+clean:
+	rm -rf build/ 
+
+.PHONY: $(TARGET) clean 
