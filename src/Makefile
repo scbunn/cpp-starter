@@ -8,8 +8,8 @@ LDLIBS =
 LDFLAGS =
 CXXFLAGS = -std=c++14 -stdlib=libc++ -Wall
 TARGET = app_name
-SOURCES = $(wildcard *.cc)
-OBJ = $(SOURCES:%.cc=$(BUILD_DIR)/%.o)
+SOURCES = $(wildcard *.cpp)
+OBJ = $(SOURCES:%.cpp=$(BUILD_DIR)/%.o)
 DEPS = $(OBJ:%.o=%.d)
 
 $(TARGET) : $(BUILD_DIR)/$(TARGET)
@@ -20,7 +20,7 @@ $(BUILD_DIR)/$(TARGET) : $(OBJ)
 
 -include $(DEPS)
 
-$(BUILD_DIR)/%.o : %.cc
+$(BUILD_DIR)/%.o : %.cpp
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@ $(INC)
 

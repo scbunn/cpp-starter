@@ -10,8 +10,8 @@ LDLIBS = lib/libgtest.a
 LDFLAGS =
 CXXFLAGS = -std=c++14 -pthread -stdlib=libc++ -Wall
 TARGET = test_suite
-TESTS = $(wildcard *.cc)
-OBJ = $(TESTS:%.cc=$(BUILD_DIR)/%.o)
+TESTS = $(wildcard *.cpp)
+OBJ = $(TESTS:%.cpp=$(BUILD_DIR)/%.o)
 DEPS = $(OBJ:%.o=%.d)
 
 $(TARGET) : $(BUILD_DIR)/$(TARGET)
@@ -22,7 +22,7 @@ $(BUILD_DIR)/$(TARGET) : $(OBJ)
 
 -include $(DEPS)
 
-$(BUILD_DIR)/%.o : %.cc gtestlib
+$(BUILD_DIR)/%.o : %.cpp gtestlib
 	mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -MMD -c $< -o $@ $(INC)
 
